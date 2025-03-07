@@ -1,2 +1,11 @@
-# simonswebsite
-My personal website/blog/cv-viewer
+ ____  _                            __        __   _         _ _
+/ ___|(_)_ __ ___   ___  _ __  ___  \ \      / /__| |__  ___(_) |_ ___
+\___ \| |  _   _ \ / _ \|  _ \/ __|  \ \ /\ / / _ \  _ \/ __| | __/ _ \
+ ___) | | | | | | | (_) | | | \__ \   \ V  V /  __/ |_) \__ \ | ||  __/
+|____/|_|_| |_| |_|\___/|_| |_|___/    \_/\_/ \___|_.__/|___/_|\__\___|
+
+This is the repository for my Website. It is used by me for various things.
+
+When you have questions or problems, feel free to contact me under *s1monp@mailbox.org*.
+
+Deploy options will follow soon (When the curl feature is ready).
