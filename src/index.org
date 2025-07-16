@@ -3,7 +3,8 @@
 #+DESCRIPTION: main page with introduction and annotations to the website
 #+OPTIONS: toc:nil num:nil title:nil
 
-Hi, I'm Simon, aka DrDos.\\
+Hi, I'm Simon, aka DrDos.
+
 Welcome to my website. It is filled with variable content. I post here block entries on various topics of IT and maybe also psychology (or even a combination of both :O). Also, my public PGP key can be found here under the menu item [[/pgp.html][PGP]].
 
 Here are a few notes about my website:
