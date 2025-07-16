@@ -1,0 +1,6 @@
+#+TITLE:  About Me
+#+DATE:   2025-07-16
+#+DESCRIPTION: Eine Seite über mich
+#+OPTIONS: toc:nil num:nil
+
+Diese Seite ist aktuell im Aufbau. Infos, die hier stehen werden: Name, Email, Kontaktm&ouml;glichkeiten; Link zu Github; Gek&uuml;rzter Lebenslauf; Interessen; Weiteres.

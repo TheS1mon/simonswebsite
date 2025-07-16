@@ -1,0 +1,19 @@
+#+TITLE:  Mein erster Blog‑Post
+#+DATE:   2025-07-16
+#+DESCRIPTION: Kurzer Tester für RSS & Blog‑Index
+#+FILETAGS: emacs linux
+#+OPTIONS: toc:nil num:nil
+
+* Einleitung
+:PROPERTIES:
+:ID:       0f5475a1-bff3-42b9-bb50-c41c225dcdfd
+:PUBDATE:  2025-07-16 Mi 17:49
+:END:
+BlaBlaBlaBla
+
+* Weiterführendes
+:PROPERTIES:
+:ID:       31c7f674-3e7a-4e6e-b2ab-1a74eff773d7
+:PUBDATE:  2025-07-16 Mi 17:49
+:END:
+[[/pgp.html][PGP‑Schlüssel]] | [[/aboutme.html][Autor]]

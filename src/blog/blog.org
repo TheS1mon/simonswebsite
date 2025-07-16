@@ -1,0 +1,4 @@
+#+TITLE: Blog
+
+- 2025-07-16 [[file:2025-07-16-realyproductivepost.org][Mein erster Blog‑Post]] – Kurzer Teaser für RSS & Blog‑Index
+- 2025-07-16 [[file:2025-07-16-testpost.org][Mein erster Blog‑Post]] – Kurzer Teaser für RSS & Blog‑Index

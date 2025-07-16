@@ -1,0 +1,15 @@
+#+TITLE:  Simons Website
+#+DATE:   2025-07-16
+#+DESCRIPTION: Main Page
+#+OPTIONS: toc:nil num:nil
+
+Herzlich wilkommen auf meiner Webseite. Sie ist mit variablem Inhalt gef&uuml;llt. Ich poste hier Blockeintr&auml;ge zu verschiedenen Themen der IT und vielleicht auch der Psychologie (oder sogar eine Kombination aus beidem :O). Au&szlig;erdem ist mein &ouml;ffentlicher PGP-Key hier unter dem Men&uuml;punkt [[/pgp.html][PGP]] zu finden.
+
+Ich habe mich dazu entschieden, die Inhalte in der du-Form zu verfassen. Sollte Ihnen das ein ungutes Gef&uuml;hl geben, entschuldige ich mich daf&uuml;r, und bitte Sie darum, die Anrede in eine f&uuml;r Sie passendere Form gedanklich umzuformulieren. Vielen Dank :).
+
+Hier ein paar Anmerkungen zu meiner Webseite:
+- S&auml;mtliches JavaScript, welches auf dieser Seite ausgef&uuml;hrt wird, ist extrem unsicher und buggy. Ein Gl&uuml;ck, dass diese Webseite komplett auf JavaScript (und generell Skripte) verzichtet.
+- Alle Cookies, die von dieser Webseite gesetzt werden, werden dich &uuml;ber diese Seite hinaus tracken und b&ouml;sartige Dinge auf deinem Computer speichern. Wie gut nur, dass keine mehr &uuml;brig sind, da das Kr&uuml;melmonster alle aufgegessen hat.
+- Diese Webseite wird auf einem OpenBSD-VPS von [[https://openbsd.amsterdam/][openbsd.amsterdam]] betrieben.
+- Der Code dieser Webseite ist offen verf&uuml;gbar, das git-Repo ist [[https://github.com/therealdrdos/simonswebsite][hier]] zu finden.
+- Warum ist das Design der Webseite so gehalten wie es ist? Ich habe versucht, ein minimalistisches und gleichzeitig &auml;lter aussehendes Aussehen zu schaffen, weil ich das mega cool finde. Ich h&auml;tte gerne so eine Webseite um das Jahr 2000 gehabt, somit erf&uuml;lle ich mir jetzt zumindest teilweise diesen Wunsch. Die knalligen Farben und auffallenden Animationen erspare ich euch aber :)
