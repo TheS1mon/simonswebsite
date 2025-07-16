@@ -1,7 +1,6 @@
 #+TITLE: My PGP Key
 #+OPTIONS: toc:nil num:nil
 
-Below you’ll find my gpg public key.
-You can also download it directly: [[/pgp.asc][pgp.asc]].
+Below you’ll find my public gpg key. You can also download it directly: [[/static/pgp.asc][pgp.asc]].
 
 #+INCLUDE: "../static/pgp.asc" example
