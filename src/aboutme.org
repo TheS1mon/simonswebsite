@@ -1,6 +1,27 @@
 #+TITLE:  About Me
 #+DATE:   2025-07-16
-#+DESCRIPTION: Eine Seite über mich
+#+DESCRIPTION: A site about me
 #+OPTIONS: toc:nil num:nil
 
-Diese Seite ist aktuell im Aufbau. Infos, die hier stehen werden: Name, Email, Kontaktm&ouml;glichkeiten; Link zu Github; Gek&uuml;rzter Lebenslauf; Interessen; Weiteres.
+Hi visitor,
+
+I am a student of IT security in Bochum, Germany and generally a technology enthusiast.
+
+My main interests are servers and their administration, operating systems as well as networks.
+My programming enthusiasm is mostly limited to scripts and hardware-related programming (embedded, cli apps, ...).
+Let's say I wouldn't describe myself as a classic (web/app/...)-developer, more as a tinkerer. I do programming where a DIY project requires it.
+
+I'm a big fan of the open-source movement and of free software.
+
+I'm a big advocate of data protection.
+For me, this goes well beyond /"I have nothing to hide, so I don't need data protection"/ and is an essential fundamental right that needs to be protected.
+
+If you asked me for something cool to talk about, I'd probably tell you about Gentoo Linux, GNU Emacs, (Open)BSD or my last festival visit. (List is not sorted).
+
+My favorite music genre is something along the lines of hardstyle.
+
+
+Have a look at my GitHub: [[https://github.com/therealdrdos]].\\
+Visit my website (hahaha funny ik): [[https://www.dr-dos.org]]\\
+Check out my blog: [[https://www.dr-dos.org/blog]]\\
+I'm also on Mastadon: /tbd/
