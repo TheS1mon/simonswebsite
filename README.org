@@ -10,5 +10,6 @@ This is the repository for my Website. It is used by me for various things.
 
 When you have questions or problems, feel free to contact me under *s1monp@mailbox.org*.
 
-You can find the source files for building the website under =src/=. They are .org files which are exported to =site/=. You can find the latest prod website release there.//
+You can find the source files for building the website under =src/=. These are /.org/ files which are exported to =site/= based on the =template.html=. You can find the latest prod website release there.
+
 Static files like my pgp key are under =static/=.
