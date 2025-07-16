@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+     xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+     xmlns:georss="http://www.georss.org/georss"
+     xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+     xmlns:media="http://search.yahoo.com/mrss/"><channel>
+  <title>Blog</title>
+  <atom:link href="https://www.dr-dos.org/blog/posts/blog.xml" rel="self" type="application/rss+xml" />
+  <link>https://www.dr-dos.org/blog/posts</link>
+  <description><![CDATA[]]></description>
+  <language>en</language>
+  <pubDate>Wed, 16 Jul 2025 21:47:02 +0200</pubDate>
+  <lastBuildDate>Wed, 16 Jul 2025 21:47:02 +0200</lastBuildDate>
+  <generator>Emacs 30.1 Org-mode 9.7.11</generator>
+  <webMaster>drdos@Simon-Workstation (Simon)</webMaster>
+  <image>
+    <url>https://www.dr-dos.org/static/avatar.png</url>
+    <title>Blog</title>
+    <link>https://www.dr-dos.org/blog/posts</link>
+  </image>
+
+  <p>
+    Welcome to my blog – here you'll find all posts. RSS feed: <a href="https://www.dr-dos.org/blog/posts/posts/blog.xml">blog.xml</a>
+  </p>
+
+  <ul class="org-ul">
+    <li>2025-07-16 <a href="https://www.dr-dos.org/blog/posts/posts/2025-07-16-testpost.html">Test Blog Post</a> – Short test if rss and blog feed work correctly</li>
+  </ul>
+</channel>
+</rss>

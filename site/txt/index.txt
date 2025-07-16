@@ -1,0 +1,30 @@
+Hi, I'm Simon, aka DrDos.
+
+Welcome to my website. It is filled with variable content. I post here block
+entries on various topics of IT and maybe also psychology (or even a combination
+of both :O). Also, my public PGP key can be found here under the menu item
+[PGP].
+
+Here are a few notes about my website:
+- All JavaScript running on this site is extremely insecure and
+  buggy. Fortunately, this website does not use JavaScript (and scripts in
+  general) at all.
+- All cookies set by this website will track you beyond this site and store
+  malicious things on your computer. Good thing there are none left, because the
+  Cookie Monster ate them all.
+- This website is hosted on an OpenBSD VPS by [openbsd.amsterdam].
+- The code of this website is openly available, the git repo can be found
+  [here].
+- Why is the design of the website the way it is? I tried to create a
+  minimalistic and at the same time older looking look because I think it's mega
+  cool. I would have liked to have had a website like this around the year 2000,
+  so I am now fulfilling this wish, at least in part. But I'll spare you the
+  bright colors and flashy animations :)
+- The content of this website is generated statically from Emacs Org files.
+
+
+[PGP] </pgp.html>
+
+[openbsd.amsterdam] <https://openbsd.amsterdam/>
+
+[here] <https://github.com/therealdrdos/simonswebsite>
