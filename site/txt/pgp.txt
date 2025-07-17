@@ -53,4 +53,4 @@ Below you’ll find my public gpg key. You can also download it directly:
 `----
 
 
-[pgp.asc] </static/pgp.asc>
+[pgp.asc] <https://www.dr-dos.org/static/pgp.asc>

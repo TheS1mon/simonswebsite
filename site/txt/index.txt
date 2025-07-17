@@ -23,7 +23,7 @@ Here are a few notes about my website:
 - The content of this website is generated statically from Emacs Org files.
 
 
-[PGP] </pgp.html>
+[PGP] <https://www.dr-dos.org/pgp.html>
 
 [openbsd.amsterdam] <https://openbsd.amsterdam/>
 

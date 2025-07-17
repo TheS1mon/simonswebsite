@@ -5,7 +5,7 @@
 
 Hi, I'm Simon, aka DrDos.
 
-Welcome to my website. It is filled with variable content. I post here block entries on various topics of IT and maybe also psychology (or even a combination of both :O). Also, my public PGP key can be found here under the menu item [[/pgp.html][PGP]].
+Welcome to my website. It is filled with variable content. I post here block entries on various topics of IT and maybe also psychology (or even a combination of both :O). Also, my public PGP key can be found here under the menu item [[https://www.dr-dos.org/pgp.html][PGP]].
 
 Here are a few notes about my website:
 - All JavaScript running on this site is extremely insecure and buggy. Fortunately, this website does not use JavaScript (and scripts in general) at all.
