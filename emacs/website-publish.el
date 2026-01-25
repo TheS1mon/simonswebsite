@@ -258,7 +258,7 @@ ox-rss requires headlines (not lists) with links."
 Omits intro text and directly outputs headlines, not nested lists."
   ;; Build output string by iterating over entries
   (let ((entries (cdr list))
-        (output "#+TITLE: Latest Blog Posts
+        (output "#+TITLE: DrDos' Blog
 #+DESCRIPTION: DrDos' personal blog about IT, security and more.
 
 "))
@@ -324,7 +324,7 @@ This allows publishing from any directory containing template.html."
            :email "simon@dr-dos.org"
            :auto-sitemap t
            :sitemap-filename "blog-rss.org"
-           :sitemap-title "Latest Blog Posts"
+           :sitemap-title "DrDos' Blog"
            :sitemap-sort-files anti-chronologically
            :sitemap-format-entry my/rss-sitemap-entry
            :sitemap-function my/rss-sitemap-function)
