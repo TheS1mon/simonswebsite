@@ -1,4 +1,5 @@
 #+TITLE:  About Me
+#+LANGUAGE: en
 #+DATE: <2025-07-16>
 #+DESCRIPTION: A site about me
 #+OPTIONS: toc:nil num:nil
