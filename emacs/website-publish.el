@@ -5,39 +5,15 @@
 ;; website with blog functionality, RSS feed, and plain-text export.
 ;; Source: https://github.com/therealdrdos/simonswebsite
 ;;
-;; Features:
-;; - Dynamic website root detection (works from any subdirectory)
-;; - Custom HTML templating with placeholder substitution
-;; - Automatic blog index generation with descriptions and dates
-;; - RSS feed with configurable URLs
-;; - Plain-text export with ANSI color codes for terminal viewing
-;; - Performance-optimized with memoized directory lookups
-;;
-;; Directory Structure:
-;;   website-root/
-;;   ├── template.html          (required: HTML template with {{placeholders}})
-;;   ├── src/                   (Org source files)
-;;   │   ├── index.org
-;;   │   └── blog/
-;;   │       └── posts/*.org    (Blog posts with #+TITLE, #+DESCRIPTION, #+FILETAGS)
-;;   ├── static/                (CSS, images, etc.)
-;;   └── site/                  (Generated HTML output)
-;;
-;; Workflow:
-;; 1. Navigate to your website directory (or any subdirectory within it)
-;; 2. Run: M-x org-publish RET website RET
-;; 3. The package automatically finds template.html to determine the root
-;; 4. All components (pages, posts, RSS, static, txt) are published
-;;
 ;; Configuration:
 ;; Customize these variables to adapt to your setup:
 ;; - `my/site-url': Base URL of your website
 ;; - `my/rss-avatar-url': Avatar image URL for RSS feed
 ;;
-;; Advanced:
+;; Functions
 ;; - `my/site-root-reset': Clear cached root (useful after changing directories)
 ;; - `my/website-publish-mode-disable': Disable automatic root detection
-;; - `my/website-publish-force': Force-publish all files (ignores cache)
+;; - f`my/website-publish-force': Force-publish all files (ignores cache)
 ;;
 ;; Cache Behavior:
 ;; - Automatic cleanup when entire site/ directory is deleted
@@ -299,6 +275,8 @@ This allows publishing from any directory containing template.html."
            :publishing-directory ,(my/site-path "site")
            :recursive t
            :publishing-function org-html-publish-to-html
+           :with-timestamp nil
+           :body-only t
            :with-author nil)
 
           ;; Blog posts
@@ -308,6 +286,8 @@ This allows publishing from any directory containing template.html."
            :base-extension "org"
            :recursive t
            :publishing-function org-html-publish-to-html
+           :with-timestamp nil
+           :body-only t
            :with-author nil
            :section-numbers nil
            :auto-sitemap t
@@ -360,11 +340,7 @@ This allows publishing from any directory containing template.html."
 
 (defun my/org-publish-clean-stale-cache ()
   "Clean org-publish cache if output directories are missing.
-This ensures files are republished when the site directory is deleted.
-
-NOTE: This only detects when the ENTIRE output directory is missing.
-Individual deleted files are not detected.  For that, use
-`my/website-publish-force' or `C-u M-x org-publish'."
+This ensures files are republished when the site directory is deleted."
   (require 'ox-publish)
   (when (boundp 'org-publish-timestamp-directory)
     (let ((cache-dir (file-name-as-directory
