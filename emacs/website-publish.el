@@ -82,7 +82,7 @@ Website root is determined dynamically by searching for template.html."
   :type 'string
   :group 'org-export-publish)
 
-(defcustom my/rss-avatar-url "https://www.dr-dos.org/static/avatar.png"
+(defcustom my/rss-avatar-url "https://www.dr-dos.org/rss-avatar.png"
   "URL to avatar image for RSS feed."
   :type 'string
   :group 'org-export-publish)
@@ -323,7 +323,7 @@ This allows publishing from any directory containing template.html."
           ;; Static assets (CSS, images …)
           ("static"
            :base-directory ,(my/site-path "static")
-           :base-extension "css\\|png\\|jpg\\|svg\\|gif\\|webp"
+           :base-extension ".*"
            :publishing-directory ,(my/site-path "site")
            :recursive t
            :publishing-function org-publish-attachment)
