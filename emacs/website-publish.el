@@ -332,7 +332,7 @@ This allows publishing from any directory containing template.html."
           ;; Static assets (CSS, images …)
           ("static"
            :base-directory ,(my/site-path "static")
-           :base-extension ".*"
+           :base-extension "css\\|png\\|jpg\\|jpeg\\|svg\\|gif\\|webp\\|ico\\|asc\\|xml\\|txt\\|pdf"
            :publishing-directory ,(my/site-path "site")
            :recursive t
            :publishing-function org-publish-attachment)
