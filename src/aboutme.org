@@ -1,27 +1,31 @@
 #+TITLE:  About Me
 #+LANGUAGE: en
-#+DATE: <2025-07-16>
+#+DATE: <2026-01-25 Sun>
 #+DESCRIPTION: A site about me
 #+OPTIONS: toc:nil num:nil
 
-Hi visitor,
+I am a student of IT security in Bochum, Germany, and generally a technology enthusiast.
 
-I am a student of IT security in Bochum, Germany and generally a technology enthusiast.
-
-My main interests are servers and their administration, operating systems as well as networks.
-My programming enthusiasm is mostly limited to scripts and hardware-related programming (embedded, cli apps, ...).
-Let's say I wouldn't describe myself as a classic (web/app/...)-developer, more as a tinkerer. I do programming where a DIY project requires it.
+My main interests lie in server administration, operating systems, and networking.\\
+While I enjoy coding, I mostly write scripts and do a bit of low-level programming (embedded, CLI apps, ...).\\
+Let's say I wouldn't describe myself as a classic (web/app/...) developer, more as a tinkerer. I code where a DIY project requires it and I like to write tools that make my life easier.
 
 I'm a big fan of the open-source movement and of free software.
 
-I'm a big advocate of data protection.
-For me, this goes well beyond /"I have nothing to hide, so I don't need data protection"/ and is an essential fundamental right that needs to be protected.
+I'm a big advocate for privacy.\\
+I don't agree with the mindset  /"I have nothing to hide, so I don't need privacy"/. I consider it a fundamental right that must be protected.
 
-If you asked me for something cool to talk about, I'd probably tell you about Gentoo Linux, GNU Emacs, (Open)BSD or my last festival visit. (List is not sorted).
+If you asked me for something cool to talk about, I'd probably tell you about (list is not sorted):\\
+~- Cooking~ \\
+~- Homelab~ \\
+~- Gentoo Linux & (Open)BSD~ \\
+~- Emacs~ \\
+~- Festivals~
 
-My favorite music genre is something along the lines of hardstyle.
+My favorite music genre is something along the lines of Hardstyle.
 
 
 Have a look at my GitHub: [[https://github.com/therealdrdos][therealdrdos]]\\
 Check out my blog [[file:blog/blog.org][here]].\\
+My Dotfiles: [[https://github.com/therealdrdos/dotfiles][therealdrdos/dotfiles]]\\
 I'm also on Mastodon: /tbd/

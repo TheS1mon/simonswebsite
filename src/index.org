@@ -1,17 +1,18 @@
 #+TITLE:  Personal website of DrDos
 #+LANGUAGE: en
-#+DATE: <2025-07-16>
+#+DATE: <2026-01-25 Sun>
 #+DESCRIPTION: main page with introduction and annotations to the website
 #+OPTIONS: toc:nil num:nil title:nil
 
 Hi, I'm Simon, aka DrDos.
 
-Welcome to my website. It is filled with variable content. I post here block entries on various topics of IT and maybe also psychology (or even a combination of both :O). Also, my public PGP key can be found here under the menu item [[file:pgp.org][PGP]].
+Welcome to my website. Here you'll find a mix of content, mostly blog posts covering various IT topics and occasionally psychology (or even a combination of both :O).\\
+You can also find my public PGP key under the menu item [[file:pgp.org][PGP]].
 
-Here are a few notes about my website:
-- All JavaScript running on this site is extremely insecure and buggy. Fortunately, this website does not use JavaScript (and scripts in general) at all.
-- All cookies set by this website will track you beyond this site and store malicious things on your computer. Good thing there are none left, because the Cookie Monster ate them all.
+A few notes about this site:
+- All JavaScript running on this site is extremely insecure and buggy. Fortunately, this website does not use JavaScript at all.
+- All cookies set by this website track you relentlessly and install malware on your machine. Good thing there are none left, because the Cookie Monster ate them all.
 - This website is hosted on an OpenBSD VPS by [[https://openbsd.amsterdam/][openbsd.amsterdam]].
-- The code of this website is openly available, the git repo can be found [[https://github.com/therealdrdos/simonswebsite][here]].
-- Why is the design of the website the way it is? I tried to create a minimalistic and at the same time older looking look because I think it's mega cool. I would have liked to have had a website like this around the year 2000, so I am now fulfilling this wish, at least in part. But I'll spare you the bright colors and flashy animations :)
-- The content of this website is generated statically from Emacs Org files.
+- The source code of this website is openly available. You can check out the Git repo [[https://github.com/therealdrdos/simonswebsite][here]].
+- Why the design? I aimed for a minimalistic, retro aesthetic simply because I think it's mega cool. I wanted to bring the charm of the year 2000 into the present day. But I'll spare you the bright colors and flashy animations :).
+- The content is statically generated from Emacs Org files.
