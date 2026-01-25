@@ -114,12 +114,14 @@ BACKEND – What backend is the caller
 {{description}}  – #+DESCRIPTION (optional)
 {{year}}         – current year
 {{tags}}         – tag link list (posts only)
+{{lang}}         – #+LANGUAGE of the document (defaults to en)
 {{contents}}     – the exported HTML of the buffer"
   (if (eq backend 'html)
       (let* ((template-file (my/site-path "template.html"))
              (title (org-export-data (plist-get info :title) info))
              (description (or (plist-get info :description) ""))
              (year (format-time-string "%Y"))
+             (lang (or (plist-get info :language) "en"))
              (tags (when-let ((filetags (plist-get info :filetags)))
                      (mapconcat (lambda (tag)
                                   (format "<a class=\"tag\" href=\"%s#%s\">#%s</a>"
@@ -136,12 +138,13 @@ This file is required for HTML export.  Please ensure:
         (with-temp-buffer
           (insert-file-contents template-file)
           (goto-char (point-min))
-          (while (re-search-forward "{{\\(title\\|description\\|year\\|tags\\|contents\\)}}" nil t)
+          (while (re-search-forward "{{\\(title\\|description\\|year\\|tags\\|lang\\|contents\\)}}" nil t)
             (replace-match
              (pcase (match-string 1)
                ("title" title)
                ("description" description)
                ("year" year)
+               ("lang" lang)
                ("tags" (or tags ""))
                ("contents" output))
              nil t))
@@ -252,7 +255,10 @@ ox-rss requires headlines (not lists) with links."
 Omits intro text and directly outputs headlines, not nested lists."
   ;; Build output string by iterating over entries
   (let ((entries (cdr list))
-        (output "#+TITLE: Latest Blog Posts\n\n"))
+        (output "#+TITLE: Latest Blog Posts
+#+DESCRIPTION: DrDos' personal blog about IT, security and more.
+
+"))
     (dolist (entry entries output)
       (let ((entry-str (cond
                         ((stringp entry) entry)
