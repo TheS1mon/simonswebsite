@@ -22,5 +22,5 @@ My favorite music genre is something along the lines of hardstyle.
 
 
 Have a look at my GitHub: [[https://github.com/therealdrdos][therealdrdos]]\\
-Check out my blog [[https://www.dr-dos.org/blog/blog.html][here]].\\
-I'm also on Mastadon: /tbd/
+Check out my blog [[file:blog/blog.org][here]].\\
+I'm also on Mastodon: /tbd/
