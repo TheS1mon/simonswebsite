@@ -1,5 +1,5 @@
 #+TITLE:  Test Blog Post
-#+DATE:   2025-07-16
+#+DATE: <2025-07-16>
 #+DESCRIPTION: Short test if rss and blog feed work correctly
 #+FILETAGS: emacs linux
 #+OPTIONS: toc:nil num:nil

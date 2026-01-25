@@ -1,5 +1,5 @@
 #+TITLE:  Personal website of DrDos
-#+DATE:   2025-07-16
+#+DATE: <2025-07-16>
 #+DESCRIPTION: main page with introduction and annotations to the website
 #+OPTIONS: toc:nil num:nil title:nil
 

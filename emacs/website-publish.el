@@ -28,6 +28,9 @@
 (require 'ox-rss)
 (require 'subr-x) ;; for when-let
 
+(setq user-full-name "DrDos")
+(setq user-mail-address "simon@dr-dos.org")
+
 ;;;; Site Root Detection
 
 (defvar my/--site-root-directory nil
@@ -217,7 +220,7 @@ PUB-DIR is the publishing directory."
   (concat
    "#+TITLE: " title "\n\n "
    "Welcome to my blog – here you'll find all posts. "
-   (format "RSS feed: [[file:%sblog.xml][blog.xml]]\n\n  " my/--posts-dir)
+   (format "RSS feed: [[file:%sblog-rss.xml][XML]]\n\n  " my/--posts-dir)
    (org-list-to-org list)))
 
 ;;;; RSS Feed Generation
@@ -308,6 +311,8 @@ This allows publishing from any directory containing template.html."
            :html-link-use-abs-url t
            :rss-extension "xml"
            :rss-image-url ,my/rss-avatar-url
+           :author "DrDos"
+           :email "simon@dr-dos.org"
            :auto-sitemap t
            :sitemap-filename "blog-rss.org"
            :sitemap-title "Latest Blog Posts"

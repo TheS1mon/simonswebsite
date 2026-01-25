@@ -1,5 +1,5 @@
 #+TITLE:  About Me
-#+DATE:   2025-07-16
+#+DATE: <2025-07-16>
 #+DESCRIPTION: A site about me
 #+OPTIONS: toc:nil num:nil
 
@@ -21,7 +21,6 @@ If you asked me for something cool to talk about, I'd probably tell you about Ge
 My favorite music genre is something along the lines of hardstyle.
 
 
-Have a look at my GitHub: [[https://github.com/therealdrdos]].\\
-Visit my website (hahaha funny ik): [[https://www.dr-dos.org]]\\
-Check out my blog: [[https://www.dr-dos.org/blog]]\\
+Have a look at my GitHub: [[https://github.com/therealdrdos][therealdrdos]]\\
+Check out my blog [[https://www.dr-dos.org/blog/blog.html][here]].\\
 I'm also on Mastadon: /tbd/
