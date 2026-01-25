@@ -123,10 +123,13 @@ BACKEND – What backend is the caller
              (year (format-time-string "%Y"))
              (lang (or (plist-get info :language) "en"))
              (tags (when-let ((filetags (plist-get info :filetags)))
-                     (mapconcat (lambda (tag)
-                                  (format "<a class=\"tag\" href=\"%s#%s\">#%s</a>"
-                                          my/--blog-path tag tag))
-                                filetags " "))))
+                     (let ((tag-list (if (stringp filetags)
+                                         (split-string filetags)
+                                       filetags)))
+                       (mapconcat (lambda (tag)
+                                    (format "<a class=\"tag\" href=\"%s#%s\">#%s</a>"
+                                            my/--blog-path tag tag))
+                                  tag-list " ")))))
         ;; Verify template file exists before attempting to read it
         (unless (file-exists-p template-file)
           (error "Template.html not found at: %s
