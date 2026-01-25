@@ -6,10 +6,10 @@
 |____/|_|_| |_| |_|\___/|_| |_|___/    \_/\_/ \___|_.__/|___/_|\__\___|
 #+end_src
 
-This is the repository for my Website. It is used by me for various things.
+This is the source repository for my personal website and blog. 
 
-When you have questions or problems, feel free to contact me under *s1monp@mailbox.org*.
+If you have any questions or run into problems, feel free to contact me at *s1monp@mailbox.org*.
 
-You can find the source files for building the website under =src/=. These are /.org/ files which are exported to =site/= based on the =template.html=. You can find the latest prod website release there.
+You can find the source files to build the website in =src/=. These are /.org/ files which are exported to HTML and TXT files via the CI/CD pipeline.
 
-Static files like my pgp key are under =static/=.
+Static files such as my PGP key are located in =static/=.
