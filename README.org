@@ -13,3 +13,9 @@ If you have any questions or run into problems, feel free to contact me at *s1mo
 You can find the source files to build the website in =src/=. These are /.org/ files which are exported to HTML and TXT files via the CI/CD pipeline.
 
 Static files such as my PGP key are located in =static/=.
+
+** License
+
+Code (=.el=, =.yaml=, =template.html=) is BSD 3-Clause, see =LICENSE=.
+
+Content (blog posts, texts in =src/=) is [[https://creativecommons.org/licenses/by/4.0][CC BY 4.0]].
