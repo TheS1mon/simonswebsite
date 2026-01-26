@@ -2,11 +2,10 @@
 
 ;;; Commentary:
 ;; Static site generator with blog and RSS.
-;; Customize my/site-url and my/rss-avatar-url.
+;; Load this file, then call (org-publish "website" t) to build.
 
 ;;; Code:
 
-;;;; Dependencies
 (require 'ox-publish)
 (require 'ox-rss)
 (require 'subr-x)
@@ -14,47 +13,23 @@
 (setq user-full-name "DrDos")
 (setq user-mail-address "simon@dr-dos.org")
 
-;;;; Site Root Detection
+;;; Global Configuration
 
-(defvar my/site-root-cache nil
-  "Cached site root.")
+(defconst ws-root (file-name-directory
+                   (directory-file-name
+                    (file-name-directory load-file-name))))
+(defconst ws-url "https://www.dr-dos.org")
+(defconst ws-rss-avatar (concat ws-url "/rss-avatar.png"))
+(defconst ws-blog-index "/blog/blog.html")
+(defconst ws-posts-dir "posts/")
+(defconst ws-blog-title "DrDos' Blog")
+(defconst ws-blog-desc "DrDos' personal blog about IT, security and more.")
 
-(defun my/site-root ()
-  "Return cached site root."
-  (or my/site-root-cache
-      (setq my/site-root-cache
-            (let ((root (locate-dominating-file default-directory "template.html")))
-              (if root
-                  (file-name-as-directory (expand-file-name root))
-                (error "template.html not found (started from %s)" default-directory))))))
-
-(defun my/site-root-reset ()
-  "Clear cached root directory."
-  (interactive)
-  (setq my/site-root-cache nil)
-  (when (called-interactively-p 'any)
-    (message "Site root cache cleared")))
-
-(defun my/site-path (sub)
-  "Return absolute path of SUB inside website root."
-  (expand-file-name sub (my/site-root)))
-
-;;; Configuration
-
-(defcustom my/site-url "https://www.dr-dos.org"
-  "Base URL (no trailing slash)."
-  :type 'string
-  :group 'org-export-publish)
-
-(defcustom my/rss-avatar-url "https://www.dr-dos.org/rss-avatar.png"
-  "Avatar URL for RSS feed."
-  :type 'string
-  :group 'org-export-publish)
-
-(defconst my/blog-path "/blog/blog.html")
-(defconst my/posts-dir "posts/")
-
-;;;; Global Export Parameters
+;; ANSI escapes for plain-text export
+(defconst ws-ansi-bold "\e[1m")
+(defconst ws-ansi-italic "\e[3m")
+(defconst ws-ansi-underline "\e[4m")
+(defconst ws-ansi-reset "\e[0m")
 
 (setq org-html-doctype "html5")
 (setq org-html-html5-fancy t)
@@ -62,108 +37,98 @@
 (setq org-export-with-toc nil)
 (setq org-html-validation-link nil)
 
-;;;; HTML Template System
+;;; HTML Template
 
-(defun my/html-template (output backend info)
-  "Wrap OUTPUT in template.html, substituting placeholders."
-  (if (eq backend 'html)
-      (let* ((template-file (my/site-path "template.html"))
-             (title (org-export-data (plist-get info :title) info))
-             (description (or (plist-get info :description) ""))
-             (year (format-time-string "%Y"))
-             (lang (or (plist-get info :language) "en"))
-             (tags (when-let ((filetags (plist-get info :filetags)))
-                     (let ((tag-list (if (stringp filetags)
-                                         (split-string filetags)
-                                       filetags)))
-                       (mapconcat (lambda (tag)
-                                    (format "<a class=\"tag\" href=\"%s#%s\">#%s</a>"
-                                            my/blog-path tag tag))
-                                  tag-list " ")))))
-        (with-temp-buffer
-          (insert-file-contents template-file)
-          (goto-char (point-min))
-          (while (re-search-forward "{{\\(title\\|description\\|year\\|tags\\|lang\\|contents\\)}}" nil t)
-            (replace-match
-             (pcase (match-string 1)
-               ("title" title)
-               ("description" description)
-               ("year" year)
-               ("lang" lang)
-               ("tags" (or tags ""))
-               ("contents" output))
-             nil t))
-          (buffer-string)))
-    output))
-(add-to-list 'org-export-filter-final-output-functions #'my/html-template)
+(defun ws-html-template (output backend info)
+  "Wrap OUTPUT in template.html.  BACKEND must be html, INFO is export plist."
+  (if (not (eq backend 'html))
+      output
+    (let* ((tpl (expand-file-name "template.html" ws-root))
+           (title (org-export-data (plist-get info :title) info))
+           (desc (or (plist-get info :description) ""))
+           (year (format-time-string "%Y"))
+           (lang (or (plist-get info :language) "en"))
+           (tags (ws--format-tags (plist-get info :filetags))))
+      (unless (file-exists-p tpl)
+        (error "Template not found: %s" tpl))
+      (with-temp-buffer
+        (insert-file-contents tpl)
+        (goto-char (point-min))
+        (while (re-search-forward "{{\\(title\\|description\\|year\\|tags\\|lang\\|contents\\)}}" nil t)
+          (replace-match
+           (pcase (match-string 1)
+             ("title" title)
+             ("description" desc)
+             ("year" year)
+             ("lang" lang)
+             ("tags" (or tags ""))
+             ("contents" output))
+           t t))
+        (buffer-string)))))
 
-;;;; Blog Index Formatting
+(defun ws--format-tags (filetags)
+  "Format FILETAGS as HTML links.  Return nil if no tags."
+  (when filetags
+    (let ((tags (if (stringp filetags) (split-string filetags) filetags)))
+      (mapconcat (lambda (tag)
+                   (format "<a class=\"tag\" href=\"%s#%s\">#%s</a>"
+                           ws-blog-index tag tag))
+                 tags " "))))
 
-(defun my/extract-description (file-path)
-  "Extract #+DESCRIPTION from FILE-PATH."
-  (when (file-exists-p file-path)
+(unless (memq #'ws-html-template org-export-filter-final-output-functions)
+  (add-to-list 'org-export-filter-final-output-functions #'ws-html-template))
+
+;;; Blog Helpers
+
+(defun ws--extract-desc (file)
+  "Get #+DESCRIPTION from FILE."
+  (when (file-exists-p file)
     (with-temp-buffer
-      (insert-file-contents file-path)
+      (insert-file-contents file)
       (goto-char (point-min))
-      (when (re-search-forward "^#\\+DESCRIPTION:[ \\t]+\\(.*\\)$" nil t)
+      (when (re-search-forward "^#\\+DESCRIPTION:[ \t]*\\(.*\\)$" nil t)
         (match-string 1)))))
 
-(defun my/sitemap-entry (entry _style project)
-  "Format sitemap ENTRY."
-  (let* ((base-dir   (or (org-publish-property :base-directory project)
-                       default-directory))
-         (abs-entry  (expand-file-name entry base-dir))
-         (filename   (file-name-nondirectory entry))
-         (link       (concat my/posts-dir filename))
-         (title      (org-publish-find-title entry project))
-         (date       (org-publish-find-date  entry project))
-         (description (my/extract-description abs-entry)))
-    (format "%s [[file:%s][%s]] – %s"
+(defun ws--entry-data (entry project)
+  "Common metadata for ENTRY in PROJECT."
+  (let* ((base (or (org-publish-property :base-directory project)
+                   default-directory))
+         (abs (expand-file-name entry base)))
+    (list :file (file-name-nondirectory entry)
+          :title (org-publish-find-title entry project)
+          :date (org-publish-find-date entry project)
+          :desc (ws--extract-desc abs))))
+
+;;; Sitemap Formatters
+
+(defun ws-sitemap-entry (entry _style project)
+  "Format ENTRY for blog index.  PROJECT provides base directory."
+  (let* ((d (ws--entry-data entry project))
+         (file (plist-get d :file))
+         (title (plist-get d :title))
+         (date (plist-get d :date))
+         (desc (plist-get d :desc)))
+    (format "%s [[file:%s%s][%s]] – %s"
             (format-time-string "%Y-%m-%d" date)
-            link title (or description ""))))
+            ws-posts-dir file title (or desc ""))))
 
-;;;; Plain-Text Export with ANSI Colors
-
-(defun my/add-ansi-colors (filename)
-  "Add ANSI escape codes to FILENAME (bold, italic, underline)."
-  (with-temp-buffer
-    (insert-file-contents filename)
-    (goto-char (point-min))
-    (while (re-search-forward "\\*\\*\\([^*]+\\)\\*\\*" nil t)
-      (replace-match (concat "\e[1m" (match-string 1) "\e[0m") nil t))
-    (goto-char (point-min))
-    (while (re-search-forward "//\\([^/]+\\)//" nil t)
-      (replace-match (concat "\e[3m" (match-string 1) "\e[0m") nil t))
-    (goto-char (point-min))
-    (while (re-search-forward "__\\([^_]+\\)__" nil t)
-      (replace-match (concat "\e[4m" (match-string 1) "\e[0m") nil t))
-    (write-region (point-min) (point-max) filename)))
-
-(defun my/org-ascii-publish-with-ansi (plist filename pub-dir)
-  "Publish to ASCII, then add ANSI codes."
-  (let ((outfile (org-ascii-publish-to-ascii plist filename pub-dir)))
-    (my/add-ansi-colors outfile)
-    outfile))
-
-(defun my/sitemap-with-intro (title list)
-  "Generate blog index with TITLE and LIST of posts."
+(defun ws-sitemap-function (title list)
+  "Blog index page with TITLE and LIST."
   (concat
-   "#+TITLE: " title "\n\n "
+   "#+TITLE: " title "\n\n"
    "Welcome to my blog – here you'll find all posts. "
-   (format "RSS feed: [[file:%sblog-rss.xml][XML]]\n\n  " my/posts-dir)
+   (format "RSS feed: [[file:%sblog-rss.xml][XML]]\n\n" ws-posts-dir)
    (org-list-to-org list)))
 
-;;;; RSS Feed Generation
+;;; RSS Formatters
 
-(defun my/rss-sitemap-entry (entry _style project)
-  "Format ENTRY as RSS headline."
-  (let* ((base-dir (or (org-publish-property :base-directory project)
-                      default-directory))
-         (abs-entry (expand-file-name entry base-dir))
-         (filename (file-name-nondirectory entry))
-         (title (org-publish-find-title entry project))
-         (date (org-publish-find-date entry project))
-         (description (my/extract-description abs-entry)))
+(defun ws-rss-entry (entry _style project)
+  "Format ENTRY as RSS item.  PROJECT provides base directory."
+  (let* ((d (ws--entry-data entry project))
+         (file (plist-get d :file))
+         (title (plist-get d :title))
+         (date (plist-get d :date))
+         (desc (plist-get d :desc)))
     (format "* %s
 :PROPERTIES:
 :RSS_PERMALINK: %s
@@ -171,145 +136,109 @@
 :END:
 %s"
             title
-            (file-name-sans-extension filename)
+            (file-name-sans-extension file)
             (format-time-string "<%Y-%m-%d>" date)
-            (or description ""))))
+            (or desc ""))))
 
-(defun my/rss-sitemap-function (_title list)
-  "Generate RSS sitemap from LIST."
-  (let ((entries (cdr list))
-        (output "#+TITLE: DrDos' Blog
-#+DESCRIPTION: DrDos' personal blog about IT, security and more.
+(defun ws-rss-sitemap (_title list)
+  "RSS feed from LIST."
+  (concat
+   (format "#+TITLE: %s\n#+DESCRIPTION: %s\n\n" ws-blog-title ws-blog-desc)
+   (mapconcat
+    (lambda (e)
+      (cond ((stringp e) e)
+            ((consp e) (if (stringp (cdr e)) (cdr e) (car e)))
+            (t (format "%s" e))))
+    (cdr list)
+    "\n\n")))
 
-"))
-    (dolist (entry entries output)
-      (let ((entry-str (cond
-                        ((stringp entry) entry)
-                        ((consp entry) (if (stringp (cdr entry))
-                                          (cdr entry)
-                                        (car entry)))
-                        (t (format "%s" entry)))))
-        (setq output (concat output entry-str "\n\n"))))))
+;;; Plain-Text Export
 
-;;;; Publishing Project Configuration
+(defun ws--add-ansi (file)
+  "Add ANSI escapes to FILE for bold/italic/underline."
+  (with-temp-buffer
+    (insert-file-contents file)
+    (dolist (pair `(("\\*\\*\\([^*]+\\)\\*\\*" . ,ws-ansi-bold)
+                    ("//\\([^/]+\\)//" . ,ws-ansi-italic)
+                    ("__\\([^_]+\\)__" . ,ws-ansi-underline)))
+      (goto-char (point-min))
+      (while (re-search-forward (car pair) nil t)
+        (replace-match (concat (cdr pair) (match-string 1) ws-ansi-reset) t t)))
+    (write-region (point-min) (point-max) file)))
 
-(defun my/setup-publish-alist ()
-  "Set up org-publish-project-alist for current website root."
-  (interactive)
-  (setq org-publish-project-alist
-        `(("pages"
-           :base-directory ,(my/site-path "src")
-           :base-extension "org"
-           :exclude "blog/posts/.*"
-           :publishing-directory ,(my/site-path "site")
-           :recursive t
-           :publishing-function org-html-publish-to-html
-           :with-timestamp nil
-           :body-only t
-           :with-author nil)
+(defun ws-ascii-publish (plist filename pub-dir)
+  "Publish FILENAME to PUB-DIR as ASCII with ANSI.  PLIST is publish config."
+  (let ((out (org-ascii-publish-to-ascii plist filename pub-dir)))
+    (ws--add-ansi out)
+    out))
 
-          ("posts"
-           :base-directory ,(my/site-path "src/blog/posts")
-           :publishing-directory ,(my/site-path "site/blog/posts")
-           :base-extension "org"
-           :recursive t
-           :publishing-function org-html-publish-to-html
-           :with-timestamp nil
-           :body-only t
-           :with-author nil
-           :section-numbers nil
-           :auto-sitemap t
-           :sitemap-filename "../blog.org"
-           :sitemap-title "Blog"
-           :sitemap-sort-files anti-chronologically
-           :sitemap-format-entry my/sitemap-entry
-           :sitemap-function my/sitemap-with-intro)
+;;; Project Configuration
 
-          ("rss"
-           :base-directory ,(my/site-path "src/blog/posts")
-           :publishing-directory ,(my/site-path "site/blog/posts")
-           :base-extension "org"
-           :recursive t
-           :publishing-function org-rss-publish-to-rss
-           :html-link-home ,(concat my/site-url "/blog/posts/")
-           :html-link-use-abs-url t
-           :rss-extension "xml"
-           :rss-image-url ,my/rss-avatar-url
-           :author "DrDos"
-           :email "simon@dr-dos.org"
-           :auto-sitemap t
-           :sitemap-filename "blog-rss.org"
-           :sitemap-title "DrDos' Blog"
-           :sitemap-sort-files anti-chronologically
-           :sitemap-format-entry my/rss-sitemap-entry
-           :sitemap-function my/rss-sitemap-function)
+(setq org-publish-project-alist
+      `(("pages"
+         :base-directory ,(expand-file-name "src" ws-root)
+         :base-extension "org"
+         :exclude "blog/posts/.*"
+         :publishing-directory ,(expand-file-name "site" ws-root)
+         :recursive t
+         :publishing-function org-html-publish-to-html
+         :with-timestamp nil
+         :body-only t
+         :with-author nil)
 
-          ("static"
-           :base-directory ,(my/site-path "static")
-           :base-extension "css\\|png\\|jpg\\|jpeg\\|svg\\|gif\\|webp\\|ico\\|asc\\|xml\\|txt\\|pdf"
-           :publishing-directory ,(my/site-path "site")
-           :recursive t
-           :publishing-function org-publish-attachment)
+        ("posts"
+         :base-directory ,(expand-file-name "src/blog/posts" ws-root)
+         :publishing-directory ,(expand-file-name "site/blog/posts" ws-root)
+         :base-extension "org"
+         :recursive t
+         :publishing-function org-html-publish-to-html
+         :with-timestamp nil
+         :body-only t
+         :with-author nil
+         :section-numbers nil
+         :auto-sitemap t
+         :sitemap-filename "../blog.org"
+         :sitemap-title "Blog"
+         :sitemap-sort-files anti-chronologically
+         :sitemap-format-entry ws-sitemap-entry
+         :sitemap-function ws-sitemap-function)
 
-          ("txt"
-           :base-directory ,(my/site-path "src")
-           :publishing-directory ,(my/site-path "site/txt")
-           :base-extension "org"
-           :recursive t
-           :publishing-function my/org-ascii-publish-with-ansi
-           :body-only t
-           :ascii-text-width 80)
+        ("rss"
+         :base-directory ,(expand-file-name "src/blog/posts" ws-root)
+         :publishing-directory ,(expand-file-name "site/blog/posts" ws-root)
+         :base-extension "org"
+         :recursive t
+         :publishing-function org-rss-publish-to-rss
+         :html-link-home ,(concat ws-url "/blog/posts/")
+         :html-link-use-abs-url t
+         :rss-extension "xml"
+         :rss-image-url ,ws-rss-avatar
+         :author ,user-full-name
+         :email ,user-mail-address
+         :auto-sitemap t
+         :sitemap-filename "blog-rss.org"
+         :sitemap-title ,ws-blog-title
+         :sitemap-sort-files anti-chronologically
+         :sitemap-format-entry ws-rss-entry
+         :sitemap-function ws-rss-sitemap)
 
-          ("website" :components ("pages" "posts" "rss" "static" "txt")))))
+        ("static"
+         :base-directory ,(expand-file-name "static" ws-root)
+         :base-extension "css\\|png\\|jpg\\|jpeg\\|svg\\|gif\\|webp\\|ico\\|asc\\|xml\\|txt\\|pdf"
+         :publishing-directory ,(expand-file-name "site" ws-root)
+         :recursive t
+         :publishing-function org-publish-attachment)
 
-;;;; Advice Management
+        ("txt"
+         :base-directory ,(expand-file-name "src" ws-root)
+         :publishing-directory ,(expand-file-name "site/txt" ws-root)
+         :base-extension "org"
+         :recursive t
+         :publishing-function ws-ascii-publish
+         :body-only t
+         :ascii-text-width 80)
 
-(defun my/org-publish-clean-stale-cache ()
-  "Remove stale cache entries when output dirs are missing."
-  (require 'ox-publish)
-  (when (boundp 'org-publish-timestamp-directory)
-    (let ((cache-dir (file-name-as-directory
-                      (expand-file-name org-publish-timestamp-directory))))
-      (when (file-directory-p cache-dir)
-        (dolist (cache-file (directory-files cache-dir t "\\.cache\\'"))
-          (let* ((project-name (file-name-base cache-file))
-                 (project (assoc project-name org-publish-project-alist)))
-            (when project
-              (let* ((pub-dir (plist-get (cdr project) :publishing-directory))
-                     (outputs-missing (and pub-dir
-                                          (not (file-directory-p pub-dir)))))
-                (when outputs-missing
-                  (delete-file cache-file)
-                  (message "Cleaned cache: %s" project-name))))))))))
-
-(defun my/website-publish-force ()
-  "Force-publish, ignoring cache."
-  (interactive)
-  (org-publish "website" t)
-  (message "Force-published website"))
-
-(defun my/refresh-publish-alist-advice (&rest _args)
-  "Refresh project alist before publishing."
-  (my/site-root-reset)
-  (my/setup-publish-alist)
-  (my/org-publish-clean-stale-cache))
-
-(defun my/website-publish-mode-enable ()
-  "Enable auto-refresh of project alist."
-  (interactive)
-  (advice-add 'org-publish :before #'my/refresh-publish-alist-advice)
-  (when (called-interactively-p 'any)
-    (message "Publish mode enabled")))
-
-(defun my/website-publish-mode-disable ()
-  "Disable auto-refresh of project alist."
-  (interactive)
-  (advice-remove 'org-publish #'my/refresh-publish-alist-advice)
-  (when (called-interactively-p 'any)
-    (message "Publish mode disabled")))
-
-(my/website-publish-mode-enable)
-(ignore-errors (my/setup-publish-alist))
+        ("website" :components ("pages" "posts" "rss" "static" "txt"))))
 
 (provide 'website-publish)
 ;;; website-publish.el ends here
