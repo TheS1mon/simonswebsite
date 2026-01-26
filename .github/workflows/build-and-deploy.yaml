@@ -9,6 +9,7 @@ on:
       - "src/**"
       - "static/**"
       - "emacs/**"
+      - "scripts/**"
       - "template.html"
       - ".github/workflows/build-and-deploy.yaml"
 
@@ -41,12 +42,16 @@ jobs:
       - name: Build
         run: emacs --batch -Q --load emacs/ci-build.el
 
+      - name: Generate sitemap
+        run: sh scripts/gen-sitemap.sh
+
       - name: Check output
         run: |
           test -f site/index.html || { echo "missing index.html"; exit 1; }
           test -f site/blog/blog.html || { echo "missing blog.html"; exit 1; }
           test -f site/pgp.asc || { echo "missing pgp.asc"; exit 1; }
           test -f site/blog/posts/blog-rss.xml || { echo "missing blog-rss.xml"; exit 1; }
+          test -f site/sitemap.xml || { echo "missing sitemap.xml"; exit 1; }
 
       - name: Upload artifact
         uses: actions/upload-artifact@v6
