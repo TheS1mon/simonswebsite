@@ -1,0 +1,26 @@
+---
+name: Action Lint
+
+# yamllint disable-line rule:truthy
+on:
+  push:
+    paths:
+      - ".github/workflows/**"
+  pull_request:
+    paths:
+      - ".github/workflows/**"
+
+jobs:
+  action-lint:
+    name: Action-Lint
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Actionlint
+        uses: raven-actions/actionlint@v2
