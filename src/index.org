@@ -1,7 +1,7 @@
 #+TITLE:  Personal website of DrDos
 #+LANGUAGE: en
 #+DATE: <2026-01-25 Sun>
-#+DESCRIPTION: DrDos' personal site and blog platform Welcome visitor!
+#+DESCRIPTION: DrDos' personal site and blog platform. Welcome visitor!
 #+OPTIONS: toc:nil num:nil title:nil
 
 Hi, I'm Simon, aka DrDos.
