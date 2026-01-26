@@ -16,7 +16,6 @@
   (package-refresh-contents)
   (package-install 'ox-rss))
 
-;; Cleanup build dir
 (when (file-directory-p (expand-file-name "site" default-directory))
   (delete-directory (expand-file-name "site" default-directory) t))
 (make-directory (expand-file-name "site" default-directory) t)

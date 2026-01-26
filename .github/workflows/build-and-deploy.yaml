@@ -41,7 +41,7 @@ jobs:
       - name: Build
         run: emacs --batch -Q --load emacs/ci-build.el
 
-      - name: Verify build
+      - name: Check output
         run: |
           test -f site/index.html || { echo "missing index.html"; exit 1; }
           test -f site/blog/blog.html || { echo "missing blog.html"; exit 1; }
@@ -113,7 +113,7 @@ jobs:
             -e "ssh -p ${DEPLOY_PORT} -i ~/.ssh/deploy_key" \
             site/ "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/"
 
-      - name: Verify deployment
+      - name: Smoke test
         env:
           SITE_URL: ${{ vars.SITE_URL }}
         run: |

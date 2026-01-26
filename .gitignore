@@ -2,15 +2,15 @@
 .cache/
 .elpa/
 
-## Temp emacs files
+# emacs temp files
 *~
 \#*\#
 .#*
 
-# macOS
+# macos
 .DS_Store
 
-## Auto generated files
+# generated
 /site/
 src/blog/posts/blog-rss.org
 src/blog/blog.org
