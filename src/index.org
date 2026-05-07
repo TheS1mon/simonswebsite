@@ -12,7 +12,7 @@ You can also find my public PGP key under the menu item [[file:pgp.org][PGP]].
 A few notes about this site:
 - All JavaScript running on this site is extremely insecure and buggy. Fortunately, this website does not use JavaScript at all.
 - All cookies set by this website track you relentlessly and install malware on your machine. Good thing there are none left, because the Cookie Monster ate them all.
-- This website is hosted on an OpenBSD VPS by [[https://openbsd.amsterdam/][openbsd.amsterdam]].
+- This website is hosted on an OpenBSD VPS.
 - The source code of this website is openly available. You can check out the Git repo [[https://github.com/therealdrdos/simonswebsite][here]].
 - Why the design? I aimed for a minimalistic, retro aesthetic simply because I think it's mega cool. I wanted to bring the charm of the year 2000 into the present day. But I'll spare you the bright colors and flashy animations :).
 - The content is statically generated from Emacs Org files.
