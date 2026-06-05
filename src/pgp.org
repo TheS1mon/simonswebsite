@@ -3,6 +3,6 @@
 #+DESCRIPTION: DrDos' GPG public key for email and Git commit signing
 #+OPTIONS: toc:nil num:nil
 
-Below you'll find my public gpg key. You can also download it directly: [[file:../static/pgp.asc][pgp.asc]].
+Below you'll find my public gpg key. You can also download it directly: [[file:../pgp.asc][pgp.asc]].
 
 #+INCLUDE: "../static/pgp.asc" example
